@@ -1,0 +1,235 @@
+<meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Mobile UI</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }body {
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(to bottom, #f1f3f6, #e5ebf1);
+  color: #333;
+}
+
+.status-bar {
+  background: #ffffff;
+  padding: 10px 20px;
+  text-align: right;
+  font-size: 14px;
+  color: #888;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.app-header {
+  background: linear-gradient(135deg, #007aff, #00c6ff);
+  padding: 25px 20px;
+  font-size: 26px;
+  font-weight: bold;
+  color: white;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.search-bar {
+  margin: 20px;
+  background: #e8e8e8;
+  border-radius: 12px;
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.search-bar input {
+  border: none;
+  background: transparent;
+  width: 100%;
+  outline: none;
+  font-size: 16px;
+}
+
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 15px;
+  padding: 20px;
+}
+
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  text-align: center;
+  font-weight: 500;
+  transition: 0.2s ease;
+  cursor: pointer;
+}
+
+.card:hover {
+  background: #f0faff;
+  transform: translateY(-3px);
+}
+
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: white;
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 0;
+  box-shadow: 0 -2px 8px rgba(0,0,0,0.05);
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+
+.nav-icon {
+  font-size: 16px;
+  color: #666;
+  transition: color 0.2s ease;
+  padding: 5px 10px;
+}
+
+.nav-icon.active {
+  color: #007aff;
+  font-weight: bold;
+  border-bottom: 2px solid #007aff;
+}
+
+.screen {
+  display: none;
+  padding: 20px;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.screen.active {
+  display: block;
+}
+
+.settings-panel input[type="text"],
+.calculator input[type="text"] {
+  padding: 10px;
+  width: 100%;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.settings-panel button,
+.calculator button {
+  padding: 10px 20px;
+  background-color: #007aff;
+  border: none;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.weather-display {
+  font-size: 18px;
+  background: #e3f2fd;
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.calculator button {
+  width: 48%;
+  margin: 1%;
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+  </style>
+</head>
+<body>  <div class="status-bar">
+    12:45 &nbsp; | &nbsp; 100% &nbsp; | &nbsp; Wi-Fi
+  </div>  <div class="app-header" id="headerTitle">
+    Hello, Rohit!
+  </div>  <div class="search-bar">
+    <input type="text" placeholder="Search anything..." />
+  </div>  <div class="screen active" id="homeScreen">
+    <div class="card-container">
+      <div class="card" onclick="switchTab('weather', this)">Weather</div>
+      <div class="card" onclick="switchTab('calculator', this)">Calculator</div>
+      <div class="card" onclick="switchTab('settings', this)">Settings</div>
+    </div>
+  </div>  <div class="screen" id="settings">
+    <div class="settings-panel">
+      <h3>Customize Interface</h3>
+      <input type="text" id="nameInput" placeholder="Enter your name" />
+      <button onclick="changeName()">Update Name</button>
+    </div>
+  </div>  <div class="screen" id="weather">
+    <h3>Weather Widget</h3>
+    <div class="weather-display" id="weatherInfo">25°C | Clear Sky | Wind: 5km/h</div>
+  </div>  <div class="screen" id="calculator">
+    <h3>Simple Calculator</h3>
+    <div class="calculator">
+      <input type="text" id="calcDisplay" readonly />
+      <div>
+        <button onclick="appendToCalc('1')">1</button>
+        <button onclick="appendToCalc('2')">2</button>
+        <button onclick="appendToCalc('+')">+</button>
+        <button onclick="appendToCalc('3')">3</button>
+        <button onclick="appendToCalc('4')">4</button>
+        <button onclick="appendToCalc('-')">-</button>
+        <button onclick="appendToCalc('*')">*</button>
+        <button onclick="appendToCalc('5')">5</button>
+        <button onclick="appendToCalc('6')">6</button>
+        <button onclick="appendToCalc('/')">/</button>
+        <button onclick="clearCalc()">C</button>
+        <button onclick="calculateResult()">=</button>
+      </div>
+    </div>
+  </div>  <div class="bottom-nav">
+    <div class="nav-icon active" onclick="showScreen('homeScreen', this)">Home</div>
+    <div class="nav-icon" onclick="showScreen('settings', this)">Settings</div>
+    <div class="nav-icon" onclick="showScreen('weather', this)">Weather</div>
+    <div class="nav-icon" onclick="showScreen('calculator', this)">Calc</div>
+  </div>  <script>
+    function showScreen(id, el) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.nav-icon').forEach(i => i.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      el.classList.add('active');
+    }
+
+    function changeName() {
+      const newName = document.getElementById('nameInput').value;
+      if (newName.trim() !== '') {
+        document.getElementById('headerTitle').textContent = "Hello, " + newName + "!";
+      }
+    }
+
+    let calcExpression = "";
+    function appendToCalc(val) {
+      calcExpression += val;
+      document.getElementById('calcDisplay').value = calcExpression;
+    }
+
+    function clearCalc() {
+      calcExpression = "";
+      document.getElementById('calcDisplay').value = "";
+    }
+
+    function calculateResult() {
+      try {
+        calcExpression = eval(calcExpression).toString();
+        document.getElementById('calcDisplay').value = calcExpression;
+      } catch (e) {
+        document.getElementById('calcDisplay').value = "Error";
+      }
+    }
+  </script></body>
+</html>
